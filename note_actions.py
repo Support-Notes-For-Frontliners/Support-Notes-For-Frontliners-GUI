@@ -53,9 +53,9 @@ format of updated_data
 """
 
 
-def update_notes(data_loc, updated_data):
+def update_notes(data_location, updated_data):
     for key, value in updated_data.items():
-        data_loc.child(key).set(value)
+        data_location.child(key).set(value)
 
 
 # NOTE: DO NOT REMOVE LINE!
@@ -65,3 +65,5 @@ open('backup_data/'+datetime.now().strftime("%m%d%Y-%H%M%S") +
      '.json', 'w+').write(json.dumps(get_notes_iterable(data)))
 
 # NOTE: ALL CODE BELOW THIS POINT
+
+# print(update_notes(data_loc, get_notes_iterable(data)))
