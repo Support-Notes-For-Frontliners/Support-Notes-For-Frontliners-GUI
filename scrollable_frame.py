@@ -1,5 +1,5 @@
-import tkinter
-tk = tkinter
+import tkinter as tk
+from sys import platform
 
 """
 Code from https://stackoverflow.com/a/23484665 
@@ -18,6 +18,9 @@ class ScrollableFrame(tk.Frame):
                                 height=350,
                                 highlightthickness=0,
                                 yscrollcommand=self.vscrollbar.set)
+        self.canvas.bind_all("<MouseWheel>", self._on_mousewheel)
+        self.canvas.bind_all("<Button-4>", self._on_mousewheel)
+        self.canvas.bind_all("<Button-5>", self._on_mousewheel)
         self.canvas.pack(side="left", fill="both", expand="true")
         self.vscrollbar.config(command=self.canvas.yview)
 
@@ -34,3 +37,8 @@ class ScrollableFrame(tk.Frame):
     def set_scrollregion(self, event=None):
         """ Set the scroll region on the canvas"""
         self.canvas.configure(scrollregion=self.canvas.bbox('all'))
+
+    def _on_mousewheel(self, event):
+        self.canvas.yview_scroll(int(-1 * (event.delta / 120)), "units")
+        if platform == "darwin":
+            self.canvas.yview_scroll(int(-1 * (event.delta / 1)), "units")
