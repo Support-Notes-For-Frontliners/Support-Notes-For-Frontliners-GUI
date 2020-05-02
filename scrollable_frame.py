@@ -1,10 +1,6 @@
 import tkinter
 tk = tkinter
 
-"""
-Code from https://stackoverflow.com/a/23484665 
-"""
-
 
 class ScrollableFrame(tk.Frame):
     def __init__(self, master, **kwargs):
