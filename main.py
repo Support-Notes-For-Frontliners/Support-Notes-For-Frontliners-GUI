@@ -35,13 +35,11 @@ def getCheckedItems(self):
 
 
 def button_callback():
-    x = 2
+    x = 0
     for data_piece in data_iterable:
         var = tk.StringVar(value=data_piece)
         window.vars.append(var)
         data_string = str(data_iterable[data_piece])
-        start_string = '\'note\': '
-        end_string = ', \'sender\': '
         data_obj = data_iterable[data_piece]
         sender_string = textwrap.fill(data_obj['sender'], 110)
         note_string = textwrap.fill(data_obj['note'], 110)
@@ -50,7 +48,7 @@ def button_callback():
                             anchor='w', width=100, height=len(note_string.split('\n')) + 3,
                             relief='flat', highlightthickness=0
                             )
-        cb.grid(row=x, column=0)
+        cb.grid(row=x, column=1)
         # cb.deselect()
 
         x += 1
@@ -70,15 +68,18 @@ def save_command():
 """
 create scrollable frame
 """
+
+topframe = tk.Frame(window)
+topframe.pack(side=tk.TOP)
 checkbox_pane = scrollable_frame.ScrollableFrame(window, bg='#FFFFFF')
-checkbox_pane.pack(expand='true', fill='both')
+checkbox_pane.pack(expand=tk.TRUE, fill=tk.BOTH)
 
 
-btn_checkbox = tk.Button(checkbox_pane.interior,
+btn_checkbox = tk.Button(topframe,
                          text='List: click here to display all unapproved notes', command=button_callback).grid(row=0, column=0)
 
-btn_save = tk.Button(checkbox_pane.interior,
-                     text='Save: click here to approve all selected notes', command=save_command).grid(row=1, column=0)
+btn_save = tk.Button(topframe,
+                     text='Save: click here to approve all selected notes', command=save_command).grid(row=0, column=1)
 
 
 """
