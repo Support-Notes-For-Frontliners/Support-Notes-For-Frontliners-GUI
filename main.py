@@ -42,10 +42,9 @@ def button_callback():
         data_string = str(data_iterable[data_piece])
         start_string = '\'note\': '
         end_string = ', \'sender\': '
-        sender_string = textwrap.fill(data_string[data_string.index(
-            end_string) + len(end_string):data_string.index(', \'sent\': ')], 110)
-        note_string = textwrap.fill(data_string[data_string.index(
-            start_string) + len(start_string):data_string.index(end_string)], 110)
+        data_obj = data_iterable[data_piece]
+        sender_string = textwrap.fill(data_obj['sender'], 110)
+        note_string = textwrap.fill(data_obj['note'], 110)
         cb = tk.Checkbutton(checkbox_pane.interior, var=var, text=note_string + '\n' + sender_string,
                             onvalue=data_piece, offvalue="",
                             anchor='w', width=100, height=len(note_string.split('\n')) + 3,
