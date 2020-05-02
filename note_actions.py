@@ -3,6 +3,7 @@ from dotenv import load_dotenv
 import os
 from datetime import datetime
 import json
+import random
 load_dotenv()
 
 config = {
@@ -68,7 +69,7 @@ and what to set it to
 
 def set_notes_value(data_location, key_list, param, value):
     for key in key_list:
-        data_location.child(key).update({param: value})
+        data_location.child(key).update({param: random.choice(value)})
 
 
 # NOTE: DO NOT REMOVE LINE!

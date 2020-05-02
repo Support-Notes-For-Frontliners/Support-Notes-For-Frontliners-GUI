@@ -11,7 +11,7 @@ creating main window and defining necessary variables
 """
 window = tk.Tk()
 window.title('Support For Frontliners GUI')
-window.geometry('300x300+300+300')  # widthxheight (px)
+window.geometry('180x300+300+300')  # widthxheight (px)
 window.vars = []
 data_iterable = note_actions.get_note_condition(
     note_actions.data, 'approved', False)
@@ -62,7 +62,17 @@ def button_callback():
 def save_command():
     approved_keys = getCheckedItems(window)
     note_actions.set_notes_value(
-        note_actions.data_loc, approved_keys, 'approved', True)
+        note_actions.data_loc, approved_keys, 'approved', [True])
+
+# function to randomize name
+
+
+def rename_command():
+    name_list = ['Bellevue resident', 'a thankful member of the community',
+                 'patron of the frontliners', 'someone who looks up to you']  # list of good random names
+    rename_keys = getCheckedItems(window)
+    note_actions.set_notes_value(
+        note_actions.data_loc, rename_keys, 'sender', name_list)
 
 
 """
@@ -76,12 +86,13 @@ checkbox_pane.pack(expand=tk.TRUE, fill=tk.BOTH)
 
 
 btn_checkbox = tk.Button(topframe,
-                         text='List: click here to display all unapproved notes', command=button_callback).grid(row=0, column=0)
+                         text='List: display all unapproved notes', command=button_callback).grid(row=0, column=0)
 
 btn_save = tk.Button(topframe,
-                     text='Save: click here to approve all selected notes', command=save_command).grid(row=0, column=1)
+                     text='Save: approve all selected notes', command=save_command).grid(row=0, column=1)
 
-
+btn_rename = tk.Button(topframe, text='Rename: randomly renames selected notes',
+                       command=rename_command).grid(row=0, column=2)
 """
 run the window
 """
