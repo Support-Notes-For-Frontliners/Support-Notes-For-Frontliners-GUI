@@ -58,6 +58,19 @@ def update_notes(data_location, updated_data):
         data_location.child(key).set(value)
 
 
+"""
+pass in data location (child)
+the list of children of that location
+the param to set
+and what to set it to
+"""
+
+
+def set_notes_value(data_location, key_list, param, value):
+    for key in key_list:
+        data_location.child(key).update({param: value})
+
+
 # NOTE: DO NOT REMOVE LINE!
 if not os.path.isdir('./backup_data'):
     os.mkdir('backup_data')
@@ -65,5 +78,3 @@ open('backup_data/'+datetime.now().strftime("%m%d%Y-%H%M%S") +
      '.json', 'w+').write(json.dumps(get_notes_iterable(data)))
 
 # NOTE: ALL CODE BELOW THIS POINT
-
-# print(update_notes(data_loc, get_notes_iterable(data)))
