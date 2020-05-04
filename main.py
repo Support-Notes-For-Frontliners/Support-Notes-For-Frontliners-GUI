@@ -12,9 +12,6 @@ creating main window and defining necessary variables
 window = tk.Tk()
 window.title('Support For Frontliners GUI')
 window.geometry('180x300+300+300')  # widthxheight (px)
-window.vars = []
-data_iterable = note_actions.get_note_condition(
-    note_actions.data, 'approved', False)
 
 
 """
@@ -35,6 +32,9 @@ def getCheckedItems(self):
 
 
 def button_callback():
+    data_iterable = note_actions.get_note_condition(
+        note_actions.data, 'approved', False)
+    window.vars = []
     x = 0
     for data_piece in data_iterable:
         var = tk.StringVar(value=data_piece)
@@ -49,7 +49,7 @@ def button_callback():
                             relief='flat', highlightthickness=0
                             )
         cb.grid(row=x, column=1)
-        # cb.deselect()
+        cb.deselect()
 
         x += 1
 
@@ -63,6 +63,7 @@ def save_command():
     approved_keys = getCheckedItems(window)
     note_actions.set_notes_value(
         note_actions.data_loc, approved_keys, 'approved', [True])
+    button_callback()
 
 # function to randomize name
 
@@ -73,6 +74,7 @@ def rename_command():
     rename_keys = getCheckedItems(window)
     note_actions.set_notes_value(
         note_actions.data_loc, rename_keys, 'sender', name_list)
+    button_callback()
 
 
 """
