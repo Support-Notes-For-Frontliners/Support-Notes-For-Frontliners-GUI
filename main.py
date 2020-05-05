@@ -52,7 +52,7 @@ def button_callback():
                             relief='flat', highlightthickness=0
                             )
         cb.grid(row=x, column=1)
-        cb.deselect()
+        # cb.deselect()
 
         x += 1
     window.geometry('740x600+300+300')
