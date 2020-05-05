@@ -4,7 +4,8 @@ import note_actions
 import textwrap
 
 
-print(str(note_actions.get_note_amt(note_actions.data)) + ' notes received')
+print(str(note_actions.get_note_amt(
+    note_actions.firebase.database().child("formData").get())) + ' notes received')
 
 """
 creating main window and defining necessary variables
@@ -33,8 +34,10 @@ def getCheckedItems(self):
 
 def button_callback():
     data_iterable = note_actions.get_note_condition(
-        note_actions.data, 'approved', False)
+        note_actions.firebase.database().child("formData").get(), 'approved', False)
+    print(len(data_iterable))
     window.vars = []
+
     x = 0
     for data_piece in data_iterable:
         var = tk.StringVar(value=data_piece)
@@ -52,7 +55,6 @@ def button_callback():
         cb.deselect()
 
         x += 1
-
     window.geometry('740x600+300+300')
 
 
@@ -62,7 +64,7 @@ def button_callback():
 def save_command():
     approved_keys = getCheckedItems(window)
     note_actions.set_notes_value(
-        note_actions.data_loc, approved_keys, 'approved', [True])
+        note_actions.firebase.database().child("formData"), approved_keys, 'approved', [True])
     button_callback()
 
 # function to randomize name
@@ -73,7 +75,7 @@ def rename_command():
                  'patron of the frontliners', 'someone who looks up to you']  # list of good random names
     rename_keys = getCheckedItems(window)
     note_actions.set_notes_value(
-        note_actions.data_loc, rename_keys, 'sender', name_list)
+        note_actions.firebase.database().child("formData"), rename_keys, 'sender', name_list)
     button_callback()
 
 

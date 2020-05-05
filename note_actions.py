@@ -5,7 +5,6 @@ from datetime import datetime
 import json
 import random
 load_dotenv()
-
 config = {
     "apiKey": "apiKey",
     "authDomain": os.getenv("AUTH_DOMAIN"),
@@ -15,18 +14,18 @@ config = {
 
 firebase = pyrebase.initialize_app(config)
 
-db = firebase.database()
-data = db.child("formData").get()
-data_loc = db.child("formData")
+# db = firebase.database()
+# data = db.child("formData")
+# # data_loc = db.child("formData")
 
 
-def get_note_amt(data):
-    return len(data.each())
+def get_note_amt(data_in):
+    return len(data_in.each())
 
 
-def get_notes_iterable(data):
+def get_notes_iterable(data_in):
     iter = {}
-    for note in data.each():
+    for note in data_in.each():
         iter[note.key()] = note.val()
     return iter
 
@@ -37,9 +36,9 @@ value is the boolean value (true, false, or an exact string)
 """
 
 
-def get_note_condition(data, condition, value):
+def get_note_condition(data_in, condition, value):
     iter = {}
-    for note in data.each():
+    for note in data_in.each():
         if note.val()[condition] == value:
             iter[note.key()] = note.val()
     return iter
@@ -76,6 +75,6 @@ def set_notes_value(data_location, key_list, param, value):
 if not os.path.isdir('./backup_data'):
     os.mkdir('backup_data')
 open('backup_data/'+datetime.now().strftime("%m%d%Y-%H%M%S") +
-     '.json', 'w+').write(json.dumps(get_notes_iterable(data)))
+     '.json', 'w+').write(json.dumps(get_notes_iterable(firebase.database().child("formData").get())))
 
 # NOTE: ALL CODE BELOW THIS POINT
