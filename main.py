@@ -46,13 +46,14 @@ def button_callback():
         data_obj = data_iterable[data_piece]
         sender_string = textwrap.fill(data_obj['sender'], 110)
         note_string = textwrap.fill(data_obj['note'], 110)
-        cb = tk.Checkbutton(checkbox_pane.interior, var=var, text=note_string + '\n' + sender_string,
+        location_string = textwrap.fill(data_obj['facility'], 110)
+        cb = tk.Checkbutton(checkbox_pane.interior, var=var, text=note_string + '\n' + sender_string + '\n' + location_string,
                             onvalue=data_piece, offvalue="",
-                            anchor='w', width=100, height=len(note_string.split('\n')) + 3,
+                            anchor='w', width=100, height=len(note_string.split('\n')) + 4,
                             relief='flat', highlightthickness=0
                             )
         cb.grid(row=x, column=1)
-        # cb.deselect()
+        cb.deselect()
 
         x += 1
     window.geometry('740x600+300+300')
