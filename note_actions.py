@@ -4,6 +4,7 @@ import os
 from datetime import datetime
 import json
 import random
+import copy
 load_dotenv()
 config = {
     "apiKey": "apiKey",
@@ -68,7 +69,8 @@ and what to set it to
 
 def set_notes_value(data_location, key_list, param, value):
     for key in key_list:
-        data_location.child(key).update({param: random.choice(value)})
+        temp_ref = copy.copy(data_location)
+        temp_ref.child(key).update({param: random.choice(value)})
 
 
 # NOTE: DO NOT REMOVE LINE!

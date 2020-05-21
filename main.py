@@ -67,7 +67,6 @@ def button_callback():
 
 def save_command():
     approved_keys = getCheckedItems(window)
-    # print(approved_keys)
     note_actions.set_notes_value(
         note_actions.firebase.database().child("formData"), approved_keys, 'approved', [True])
     button_callback()
