@@ -4,9 +4,6 @@ import note_actions
 import textwrap
 
 
-print(str(note_actions.get_note_amt(
-    note_actions.firebase.database().child("formData").get())) + ' notes received')
-
 """
 creating main window and defining necessary variables
 """
@@ -35,7 +32,6 @@ def getCheckedItems(self):
 def button_callback():
     data_iterable = note_actions.get_note_condition(
         note_actions.firebase.database().child("formData").get(), 'approved', False)
-    print(len(data_iterable))
     window.vars = []
 
     x = 0
@@ -58,12 +54,20 @@ def button_callback():
         x += 1
     window.geometry('740x600+300+300')
 
+    btn_notes_total = tk.Button(topframe, text='Total: ' + str(note_actions.get_note_amt(
+        note_actions.firebase.database().child("formData").get())),
+        state=tk.DISABLED).grid(row=0, column=3)
+
+    btn_notes_unapproved = tk.Button(topframe, text='Unapproved: ' + str(len(data_iterable)),
+                                     state=tk.DISABLED).grid(row=0, column=4)
+
 
 # function of save process
 
 
 def save_command():
     approved_keys = getCheckedItems(window)
+    # print(approved_keys)
     note_actions.set_notes_value(
         note_actions.firebase.database().child("formData"), approved_keys, 'approved', [True])
     button_callback()
@@ -96,7 +100,7 @@ btn_checkbox = tk.Button(topframe,
 btn_save = tk.Button(topframe,
                      text='Save: approve all selected notes', command=save_command).grid(row=0, column=1)
 
-btn_rename = tk.Button(topframe, text='Rename: randomly renames selected notes',
+btn_rename = tk.Button(topframe, text='Rename: renames selected notes',
                        command=rename_command).grid(row=0, column=2)
 """
 run the window
