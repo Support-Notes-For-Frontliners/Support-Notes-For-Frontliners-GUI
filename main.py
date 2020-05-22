@@ -9,7 +9,9 @@ creating main window and defining necessary variables
 """
 window = tk.Tk()
 window.title('Support For Frontliners GUI')
+window.configure(bg='#f0f0f0')
 window.geometry('180x300+300+300')  # widthxheight (px)
+first = True
 
 
 """
@@ -30,6 +32,28 @@ def getCheckedItems(self):
 
 
 def button_callback():
+    # clear window
+    global first
+    if first:
+        first = False
+    else:
+        global topframe
+        global checkbox_pane
+        topframe.destroy()
+        topframe = tk.Frame(window)
+        topframe.pack(side=tk.TOP)
+        checkbox_pane.destroy()
+        checkbox_pane = scrollable_frame.ScrollableFrame(window)
+        checkbox_pane.pack(expand=tk.TRUE, fill=tk.BOTH)
+
+        btn_checkbox = tk.Button(topframe,
+                                 text='List: display all unapproved notes', command=button_callback).grid(row=0, column=0)
+        btn_save = tk.Button(topframe,
+                             text='Save: approve all selected notes', command=save_command).grid(row=0, column=1)
+        btn_rename = tk.Button(topframe, text='Rename: renames selected notes',
+                               command=rename_command).grid(row=0, column=2)
+
+    # iterate data into checkbox_pane
     data_iterable = note_actions.get_note_condition(
         note_actions.firebase.database().child("formData").get(), 'approved', False)
     window.vars = []
@@ -84,12 +108,12 @@ def rename_command():
 
 
 """
-create scrollable frame
+create widgets (bar, scrollableframe, buttons)
 """
 
 topframe = tk.Frame(window)
 topframe.pack(side=tk.TOP)
-checkbox_pane = scrollable_frame.ScrollableFrame(window, bg='#FFFFFF')
+checkbox_pane = scrollable_frame.ScrollableFrame(window)
 checkbox_pane.pack(expand=tk.TRUE, fill=tk.BOTH)
 
 
@@ -101,6 +125,8 @@ btn_save = tk.Button(topframe,
 
 btn_rename = tk.Button(topframe, text='Rename: renames selected notes',
                        command=rename_command).grid(row=0, column=2)
+
+
 """
 run the window
 """
